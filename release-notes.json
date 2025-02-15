@@ -1,7 +1,8 @@
 [
     {
         "version": "Version 2.1.0",
-        "date": "February 15, 2025",
+        "date": "2025-02-15",
+        "category": "new-feature",
         "changes": [
             "🚀 New AI-powered learning recommendations.",
             "🛠️ Improved dashboard UI for better navigation.",
@@ -10,7 +11,8 @@
     },
     {
         "version": "Version 2.0.5",
-        "date": "January 28, 2025",
+        "date": "2025-01-28",
+        "category": "improvement",
         "changes": [
             "🎉 Added dark mode option.",
             "📈 Performance optimizations for faster loading.",
@@ -19,20 +21,12 @@
     },
     {
         "version": "Version 2.0.0",
-        "date": "January 10, 2025",
+        "date": "2025-01-10",
+        "category": "bug-fix",
         "changes": [
             "🚀 Major backend optimizations.",
             "🌍 Multi-language support added.",
             "🔄 Improved caching for faster responses."
-        ]
-    },
-    {
-        "version": "Version 1.9.5",
-        "date": "December 20, 2024",
-        "changes": [
-            "🎨 UI redesign for better user experience.",
-            "🔒 Enhanced security features.",
-            "⚡ Performance boost for analytics module."
         ]
     }
 ]
