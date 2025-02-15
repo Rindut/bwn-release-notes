@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bawana Release Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .release {
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+        .release h2 {
+            color: #007bff;
+        }
+        .date {
+            color: #666;
+            font-size: 14px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        #load-more {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #load-more:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bawana Release Notes</h1>
+        <input type="text" id="search" class="search-box" placeholder="Search release notes..." onkeyup="searchNotes()">
+        <div id="release-container"></div>
+        <button id="load-more" onclick="loadMoreReleases()">Load More</button>
+    </div>
+
+    <script>
+        let releases = [];
+        let currentIndex = 0;
+        const itemsPerPage = 3;
+
+        async function fetchReleaseNotes() {
+            const response = await fetch('release-notes.json');
+            releases = await response.json();
+            loadMoreReleases();
+        }
+
+        function loadMoreReleases() {
+            const container = document.getElementById('release-container');
+            const nextIndex = currentIndex + itemsPerPage;
+            const visibleReleases = releases.slice(currentIndex, nextIndex);
+
+            visibleReleases.forEach(release => {
+                const releaseDiv = document.createElement('div');
+                releaseDiv.classList.add('release');
+                releaseDiv.innerHTML = `
+                    <h2>${release.version}</h2>
+                    <p class="date">Released on: ${release.date}</p>
+                    <ul>${release.changes.map(change => `<li>${change}</li>`).join('')}</ul>
+                `;
+                container.appendChild(releaseDiv);
+            });
+
+            currentIndex = nextIndex;
+            if (currentIndex >= releases.length) {
+                document.getElementById('load-more').style.display = 'none';
+            }
+        }
+
+        function searchNotes() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const releasesDivs = document.querySelectorAll('.release');
+
+            releasesDivs.forEach(release => {
+                const text = release.textContent.toLowerCase();
+                release.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        fetchReleaseNotes();
+    </script>
+
+</body>
+</html>
